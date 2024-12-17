@@ -1,0 +1,70 @@
+{
+    "template": {
+        "context": "/alert",          
+        "vars":[
+            {
+                "name": "domain",
+                "val": "\"http://marklogic.com\""
+            }
+        ],
+        "triples": [
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasAlertURI')"
+                },
+                "object": {
+                    "val": "xs:string(fn:base-uri(.))"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasTradeURI')"
+                },
+                "object": {
+                    "val": "xs:string(URI)"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasTimestamp')"
+                },
+                "object": {
+                    "val": "xs:dateTime(timestamp)"
+                }
+            }
+        ],
+        "templates": [
+            {
+                "context": "referringDocs",
+                "vars":[
+                    {
+                        "name": "domain",
+                        "val": "\"http://marklogic.com\""
+                    }
+                ],
+                "triples": [
+                    {
+                        "subject": {
+                            "val": "sem:iri($domain || fn:base-uri(.))"
+                        },
+                        "predicate": {
+                            "val": "sem:iri($domain || '/predicate/hasReferringDoc')"
+                        },
+                        "object": {
+                            "val": "sem:iri($domain || .)"
+                        }
+                    }
+                ]
+            }  
+        ]
+    }
+}

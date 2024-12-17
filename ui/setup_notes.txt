@@ -1,0 +1,16 @@
+$ nvm use 18.0.0
+$ npm create vite@latest
+Project name:react_ui_framework
+Select a framework: React
+Select a variant: Typescript
+
+# See https://vitejs.dev/guide/env-and-mode for setting up access to environment variables.
+
+$ cd react_ui_framework
+$ npm install
+$ npm run dev
+$ npm i @tanstack/react-query
+$ npm i @tanstack/react-query-devtools
+$ npm i axios
+$ npm i react-router-dom
+$ npm i zustand

@@ -1,0 +1,117 @@
+link, via triples, entities
+
+<uri_email> hasSentDate/Time sentDate/Time;
+            emailFrom emailFrom;
+            emailTo emailTo
+{
+    "email": {
+        "headers": {
+            "date-metas": {
+                "dateTime": "2001-01-30T17:18:00.000Z",
+                "date": "2001-01-30",
+                "year": 2001
+            },
+            "id": "16cd9253-96ed-4d51-b1a6-101eb98dcc66",
+            "tofrom-metas": {
+                "email-from": {
+                    "email": "ben.glisan@enron.com"
+                },
+                "email-to": {
+                    "email": [
+                        "richard.causey@enron.com"
+                    ]
+                },
+                "firstname-from": {
+                    "firstname": "ben"
+                },
+                "firstname-to": {
+                    "firstname": [
+                        "richard"
+                    ]
+                }
+            }
+        },
+        "instance": {
+            "Date": "2001-01-30T17:18:00.000Z",
+            "From": "ben.glisan@enron.com",
+            "Subject": "Financial Reporting Review",
+            "To": "richard.causey@enron.com",
+        },
+        "triples": {
+            "triple": [
+                {
+                    "object": "richard.causey@enron.com",
+                    "predicate": "http://demo.marklogic.com#sendsTo",
+                    "subject": "ben.glisan@enron.com"
+                },
+                {
+                    "object": "richard",
+                    "predicate": "http://demo.marklogic.com#speaksTo",
+                    "subject": "ben"
+                }
+            ]
+        }
+    }
+}
+
+<uri_trade> hasClientFirstName firstName;
+            hasClientLastName lastname;
+            has tradeDate(Time) tradeDate/Time .
+{
+    "trade": {
+        "AccountNumber": 87654321,
+        "Broker": "Bogaert's",
+        "Client": {
+            "Address": "2525 Willow Drive, Ostend, Belgium",
+            "Name": "Harold Peterson",
+            "Phone": "+32 59 789 0123"
+        },
+        "Commission": 21,
+        "Fees": 0,
+        "PaymentMethod": "Electronic Funds Transfer",
+        "Price": 28,
+        "Quantity": 150,
+        "Security": {
+            "Exchange": "NYSE",
+            "Name": "Xcel Energy Inc.",
+            "Symbol": "XEL"
+        },
+        "SettlementDate": "2000-02-13",
+        "TotalAmount": 4221,
+        "TradeDate": "2000-02-11",
+        "TradeID": "BT-2000-02-11-028",
+        "TradeTime": "09:45 AM CST",
+        "TradeDateTime": "2000-02-11T15:45:00Z",
+        "Transaction": "Buy"
+    }
+}
+
+<uri_transcript> hasCallDate callDate/Time;
+                hasCaller [
+                    hasFirstName firstName
+                    hasLastName lastName
+                ]
+{
+    "transcript": {
+        "metadata": {
+            "caller1": {
+                "name": "John Doe",
+                "role": "Trader, Bogaert's"
+            },
+            "caller2": {
+                "name": "Richard Sanders",
+                "role": "Client"
+            },
+            "dateTime": "2001-08-14T11:05:00.000Z",
+            "date": "2001-08-14",
+            "subject": "Confirmation of ENE Stock Purchase (BT-2001-08-14-001)"
+        },
+        "transcriptText": "John Doe: Hi Richard, this is John Doe from Bogaert's. I'm calling to confirm your recent order to purchase 500 shares of Enron Corp. (ENE) at a price of $75.00 per share.\n\nRichard Sanders: Yes, that's correct. I'd like to proceed with that purchase.\n\nJohn Doe: Great. Just to confirm, the total amount for this transaction will be $37,535.00, including commission. The settlement date will be August 16th, 2001, and the payment method is electronic funds transfer.\n\nRichard Sanders: That all sounds correct. Please proceed with the order.\n\nJohn Doe: Excellent. I'll place the order now and send you a trade confirmation once it's executed. Thanks for your business, Richard.\n\nRichard Sanders: Thank you, John."    
+    }
+}
+
+
+
+be able to hover over entity on graph and see a level of detail
+show links in graph
+create timeline and then being able to see detail when you over over event/entity in timeline

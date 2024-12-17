@@ -1,0 +1,10 @@
+@import '@progress/kendo-theme-core/scss/functions/index.import.scss';
+
+$kendo-colors: ();
+$kendo-colors: k-map-merge(
+    $kendo-colors,
+    k-generate-color-variations('primary', rebeccapurple, 'default')
+);
+
+// App.scss
+@import "@progress/kendo-theme-default/dist/all.scss";

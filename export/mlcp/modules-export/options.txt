@@ -1,0 +1,17 @@
+-host
+ml-demo-france-1.westus2.cloudapp.azure.com
+
+-port
+8000
+
+-database
+immersion-modules
+
+-username
+immersion-user
+
+-password
+"""|jDE&hyx^uD&.cn[c"
+
+-output_file_path
+export

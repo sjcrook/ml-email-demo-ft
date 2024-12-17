@@ -1,0 +1,14 @@
+services:
+    ml:
+        image: marklogicdb/marklogic-db
+        environment:
+            - MARKLOGIC_INIT=true
+            - MARKLOGIC_ADMIN_USERNAME=mladmin
+            - MARKLOGIC_ADMIN_PASSWORD=mlap4ssw0rd
+        ports:
+            - '38000-38002:8000-8002'
+            - '38010:38010'
+        volumes:
+            - 'email-search-marklogic-volume:/var/opt/MarkLogic/'
+volumes:
+    email-search-marklogic-volume: null

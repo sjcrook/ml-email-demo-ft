@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@progress/kendo-svg-icons": "^4.0.0"
+  }
+}

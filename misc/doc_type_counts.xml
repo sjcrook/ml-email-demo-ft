@@ -1,0 +1,75 @@
+<xml>
+	<collection name="/type/PDF">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="pdf">
+				<map:value xsi:type="xs:integer">2</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+	<collection name="/type/dictionary">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="xml">
+				<map:value xsi:type="xs:integer">1</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+	<collection name="/type/emails">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="json">
+				<map:value xsi:type="xs:integer">20054</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+	<collection name="/type/employee">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="json">
+				<map:value xsi:type="xs:integer">185</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+	<collection name="/type/mp3">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="mp3">
+				<map:value xsi:type="xs:integer">8</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+	<collection name="/type/transcripts">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="xml">
+				<map:value xsi:type="xs:integer">9</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+	<collection name="/type/xDoc">
+		<map:map
+			xmlns:map="http://marklogic.com/xdmp/map"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<map:entry key="xml">
+				<map:value xsi:type="xs:integer">2</map:value>
+			</map:entry>
+			<map:entry key="pdf">
+				<map:value xsi:type="xs:integer">2</map:value>
+			</map:entry>
+		</map:map>
+	</collection>
+</xml>

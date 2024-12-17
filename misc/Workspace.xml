@@ -1,0 +1,368 @@
+<export><workspace name="Workspace"><query name="Count triples per doc" focus="false" listorder="1" taborder="1" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+declare namespace sem = "http://marklogic.com/semantics";
+
+(for $doc in fn:doc()
+    let $count := fn:count($doc//sem:triple)
+    order by $count descending
+    return
+        fn:base-uri($doc) || ": " || $count)[1 to 20]</query><query name="Query 3" focus="false" listorder="2" taborder="2" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+fn:doc("/emails/taylor-m/sent/52_.xml"),
+
+(/envelope/headers/tofrom-metas/email-from/email)[ 1 to 10 ]</query><query name="Forward and Backwards" focus="false" listorder="3" taborder="3" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="sparql" optimize="1">SELECT DISTINCT ?s ?p ?o
+WHERE {
+    # forward
+    {
+        ?m ?p ?o .
+    }
+    UNION
+    {
+        ?m ?p2 ?s .
+    }
+    UNION
+    {
+        ?m ?p3 ?i .
+        ?i ?p4 ?s .
+    }
+    # backward
+    {
+        ?s ?p5 ?m .
+    }
+    UNION
+    {
+        ?s ?p6 ?o .
+        ?o ?p7 ?m .
+    }
+    UNION
+    {
+        ?s ?p8 ?o .
+        ?o ?p9 ?i .
+        ?i ?p10 ?m .
+    }
+    ?s ?p ?o .
+  
+    FILTER(?m in (&lt;mark.taylor@enron.com&gt;))
+}</query><query name="Backward" focus="false" listorder="4" taborder="4" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="sparql" optimize="1">SELECT DISTINCT ?s ?p ?o
+WHERE {
+    # forward
+    {
+        ?m ?p ?o .
+    }
+    UNION
+    {
+        ?m ?p2 ?s .
+    }
+    UNION
+    {
+        ?m ?p3 ?i .
+        ?i ?p4 ?s .
+    }
+    ?s ?p ?o .
+  
+    FILTER(?m in (&lt;mark.taylor@enron.com&gt;))
+}</query><query name="Query 4" focus="false" listorder="5" taborder="5" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="sparql" optimize="1">SELECT ?s ?p ?o
+WHERE {
+    #&lt;mark.taylor@enron.com&gt; ?p ?o .
+    ?s ^?p ?o .
+  
+    FILTER(?s = &lt;mark.taylor@enron.com&gt;)
+}
+</query><query name="In-memory Query" focus="false" listorder="6" taborder="6" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+import module namespace sem = "http://marklogic.com/semantics" 
+    at "/MarkLogic/semantics.xqy";
+
+let $graph := sem:rdf-parse(
+    '
+        &lt;d&gt; &lt;pred&gt; &lt;i&gt; .
+
+        &lt;f&gt; &lt;pred&gt; &lt;k&gt; .
+        &lt;g&gt; &lt;pred&gt; &lt;f&gt; .
+        &lt;g&gt; &lt;pred&gt; &lt;a&gt; .
+        &lt;g&gt; &lt;pred&gt; &lt;c&gt; .
+        &lt;g&gt; &lt;pred&gt; &lt;h&gt; .
+        &lt;h&gt; &lt;pred&gt; &lt;i&gt; .
+        &lt;i&gt; &lt;pred&gt; &lt;j&gt; .
+        &lt;i&gt; &lt;pred&gt; &lt;o&gt; .
+        &lt;i&gt; &lt;pred&gt; &lt;n&gt; .
+
+        &lt;l&gt; &lt;pred&gt; &lt;g&gt; .
+        &lt;m&gt; &lt;pred&gt; &lt;g&gt; .
+        &lt;n&gt; &lt;pred&gt; &lt;s&gt; .
+        &lt;o&gt; &lt;pred&gt; &lt;t&gt; .
+
+        &lt;p&gt; &lt;pred&gt; &lt;l&gt; .
+        &lt;q&gt; &lt;pred&gt; &lt;l&gt; .
+        &lt;r&gt; &lt;pred&gt; &lt;q&gt; .
+        &lt;r&gt; &lt;pred&gt; &lt;m&gt; .
+        &lt;s&gt; &lt;pred&gt; &lt;r&gt; .
+
+        &lt;y&gt; &lt;pred&gt; &lt;s&gt; .
+    ',
+    "turtle"
+)
+return
+    sem:sparql(
+        '
+            SELECT DISTINCT ?s ?p ?o
+            WHERE {
+                # forward
+                {
+                    ?m ?p ?o .
+                }
+                UNION
+                {
+                    ?m ?p2 ?s .
+                }
+                UNION
+                {
+                    ?m ?p3 ?i .
+                    ?i ?p4 ?s .
+                }
+                UNION
+                # backward
+                {
+                    ?s ?p5 ?m .
+                }
+                UNION
+                {
+                    ?s ?p6 ?o .
+                    ?o ?p7 ?m .
+                }
+                UNION
+                {
+                    ?s ?p8 ?o .
+                    ?o ?p9 ?i .
+                    ?i ?p10 ?m .
+                }
+                ?s ?p ?o .
+
+                FILTER(?m in (&lt;q&gt;))
+            }
+            ORDER BY ?s
+        ',
+        (),
+        (),
+        sem:in-memory-store($graph)
+    )</query><query name="Doc type counts" focus="false" listorder="7" taborder="7" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+&lt;xml&gt;{
+for $collection in cts:collections()
+    let $map := map:new(())
+    let $_ :=
+        for $uri in cts:uris((), (), cts:collection-query($collection))
+            let $extn := fn:tokenize($uri, "\.")[fn:last()]
+            return
+                if (map:get($map, $extn)) then
+                    map:put($map, $extn, map:get($map, $extn) + 1)
+                else
+                    map:put($map, $extn, 1)
+    return
+        &lt;collection name="{$collection}"&gt;{$map}&lt;/collection&gt;
+}&lt;/xml&gt;</query><query name="Docs with most triples" focus="false" listorder="8" taborder="8" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+declare namespace sem = "http://marklogic.com/semantics";
+
+(
+    for $doc in fn:doc()
+        let $count := fn:count($doc//triple)
+        order by $count descending
+        return
+            fn:base-uri($doc) || ": " || $count
+            (: (fn:base-uri($doc), $doc) :)
+)[1 to 20]</query><query name="Query 6" focus="false" listorder="9" taborder="9" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+declareUpdate();
+
+const sem = require("/MarkLogic/semantics.xqy");
+
+const triples = sem.rdfParse(
+    `
+      &lt;s1&gt; &lt;p1&gt; &lt;o1&gt; .
+      &lt;s2&gt; &lt;p2&gt; "test" .
+      &lt;s3&gt; &lt;p3&gt; 250 .
+    `,
+    "turtle"
+);
+
+xdmp.documentInsert(
+    "/t.json",
+    {
+        "x": triples
+    }
+)</query><query name="Query 7" focus="false" listorder="10" taborder="10" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+
+cts.doc('/t.json')</query><query name="Query 8" focus="false" listorder="11" taborder="11" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+</query><query name="Query 9" focus="false" listorder="12" taborder="12" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+
+fn:doc("/emails/zipper-a/inbox/27_.json")</query><query name="Reprocess doc" focus="false" listorder="13" taborder="13" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+
+const doc = {
+    "envelope": {
+        "headers": {
+            "id": "e8822432-580e-41e8-93c0-fda43643ad9a",
+            "date-metas": {
+                "date": "2002-02-04T22:04:08+01:00",
+                "year": "2002"
+            },
+        },
+        "triples": {
+            "sem:triple": [
+                {
+                    "sem:subject": "neil.davies@enron.com",
+                    "sem:predicate": "http://demo.marklogic.com#sendsTo",
+                    "sem:object": "caroline.abramo@enron.com"
+                },
+                {
+                    "sem:subject": "neil.davies@enron.com",
+                    "sem:predicate": "http://demo.marklogic.com#sendsTo",
+                    "sem:object": "chuck.ames@enron.com"
+                },
+                {
+                    "sem:subject": "neil.davies@enron.com",
+                    "sem:predicate": "http://demo.marklogic.com#sendsTo",
+                    "sem:object": "naveen.andrews@enron.com"
+                }
+            ]
+        },
+        "instance": {
+            "content-type": "application/EML",
+            "filter-capabilities": "text subfiles HD-HTML"
+        }
+    }
+};
+
+
+const doc = cts.doc("/emails/zipper-a/inbox/27_.json").toObject();
+
+const newDoc = {
+    "envelope": {
+        "headers": doc.envelope.headers,
+        "instance": doc.envelope.instance
+    }
+};
+
+if (doc.envelope.triples &amp;&amp; doc.envelope.triples["sem:triple"] &amp;&amp; Array.isArray(doc.envelope.triples["sem:triple"])) {
+        newDoc.envelope.triples = doc.envelope.triples["sem:triple"].map(triple =&gt; ({
+            "triple": {
+                "subject": triple["sem:subject"],
+                "predicate": triple["sem:predicate"],
+                "object": triple["sem:object"]
+            }
+        }))
+}
+
+newDoc;
+</query><query name="Triples data types" focus="false" listorder="14" taborder="14" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+import module namespace sem = "http://marklogic.com/semantics" 
+      at "/MarkLogic/semantics.xqy";
+      
+let $triples := sem:rdf-parse(
+    '
+      &lt;s1&gt; &lt;p1&gt; &lt;o1&gt; .
+      &lt;s2&gt; &lt;p2&gt; "test" .
+      &lt;s3&gt; &lt;p3&gt; 250 .
+    ',
+    "turtle"
+)
+return
+    &lt;x&gt;{$triples}&lt;/x&gt;</query><query name="Distinct Triple Values" focus="false" listorder="15" taborder="15" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+import module namespace sem = "http://marklogic.com/semantics" 
+      at "/MarkLogic/semantics.xqy";
+
+fn:distinct-values(
+    for $value in //sem:triple/(sem:subject | sem:object)/fn:data()
+        order by $value
+        return
+            $value
+)</query><query name="Query 10" focus="false" listorder="16" taborder="16" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+
+const doc = cts.doc("/emails/zipper-a/inbox/27_.json").toObject();
+
+doc.envelope.headers</query><query name="Query 11" focus="false" listorder="17" taborder="17" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+
+const o = {
+    a: {
+      b: {
+        xc: 3
+      }
+    }
+};
+
+console.log(o.a?.["b"]?.["c"]);</query><query name="Query 12" focus="false" listorder="18" taborder="18" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+
+fn:collection('/type/emails')[ 1 to 10 ]</query><query name="Query 13" focus="false" listorder="19" taborder="19" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="sparql" optimize="1">                SELECT DISTINCT ?s ?sType ?p ?o ?oType
+                WHERE {
+                    # forward
+                    {
+                        ?m ?p ?o .
+                    }
+                    UNION
+                    {
+                        ?m ?p2 ?s .
+                    }
+                    ?s ?p ?o .
+
+                    FILTER(?m in (&lt;airam.arteaga@enron.com&gt;))
+                    BIND(IF(CONTAINS(?s, "@"), "email", "name") as ?sType)
+                    BIND(IF(CONTAINS(?o, "@"), "email", "name") as ?oType)
+                }
+</query><query name="Query 14" focus="false" listorder="20" taborder="20" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+
+        const nodeConfigs = [
+            {
+                "color": "rgba(255,0,255,1)",
+                "fontIcon": {
+                    "color": "rgb(30,144,255)",
+                    "text": "fa-user"
+                },
+                "border": {
+                    "color": "rgba(30,144,255, 0.5)"
+                },
+                "label": [
+                    {
+                        "text": "top label",
+                        "position": "s"
+                    },
+                    {
+                        "text": "bottom label",
+                        color: "rgba(200, 200, 200, 0.5)"
+                    }
+                ],
+                type: "email"
+            }, {
+                "color": "rgba(255,255,255,1)",
+                "fontIcon": {
+                    "color": "rgb(30,144,255)",
+                    "text": "fa-user"
+                },
+                "border": {
+                    "color": "rgba(30,144,255, 0.5)"
+                },
+                "label": [
+                    {
+                        "text": "top label",
+                        "position": "s"
+                    },
+                    {
+                        "text": "bottom label",
+                        color: "rgba(200, 200, 200, 0.5)"
+                    }
+                ],
+                type: "name"
+            } 
+        ];
+
+        function getNodeConfig(type) {
+            return nodeConfigs.find(nodeConfig =&gt; nodeConfig.type === type);
+        }
+
+        getNodeConfig('name');
+</query><query name="Query 15" focus="true" listorder="21" taborder="21" active="true" database="1649500795327468760" server="6408619782223939534" database-name="immersion-content" server-name="immersion" mode="javascript" optimize="1">'use strict';
+
+"http://demo.marklogic.com#speaksTo".split("#")[1]</query></workspace></export>

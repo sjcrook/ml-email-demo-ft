@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<search:options  xml:lang="zxx"
+	xmlns:search="http://marklogic.com/appservices/search">
+	<search:search-option>unfiltered</search:search-option>
+	<search:page-length>10</search:page-length>
+	<!-- Limit all searches to this additional query -->
+	<search:additional-query>
+		<cts:not-query xmlns:cts="http://marklogic.com/cts">
+			<cts:document-query>
+				<cts:uri>/dictionary/investigation.xml</cts:uri>
+			</cts:document-query>
+		</cts:not-query>
+	</search:additional-query>
+	<!-- Full-text search options -->
+	<search:term apply="term">
+		<search:empty apply="all-results"/>
+		<!--
+			Below some example options for full-text searches. Note that MarkLogic will
+			toggle options automatically depending on caps, wildcards etc.
+			See Usage Notes of http://docs.marklogic.com/cts:word-query for details.
+			Also note that forcing stemmed searches will disable wildcarded searches.
+	    -->
+		<!--
+		    <search:term-option>punctuation-insensitive</search:term-option><search:term-option>stemmed</search:term-option>
+	    -->
+	</search:term>
+	<!-- Default grammer -->
+	<search:grammar>
+		<search:quotation>"</search:quotation>
+		<search:implicit>
+			<cts:and-query strength="20" xmlns:cts="http://marklogic.com/cts"/>
+		</search:implicit>
+		<search:starter strength="30" apply="grouping" delimiter=")">(</search:starter>
+		<search:starter strength="40" apply="prefix" element="cts:not-query">-</search:starter>
+		<search:joiner strength="10" apply="infix" element="cts:or-query" tokenize="word">OR</search:joiner>
+		<search:joiner strength="20" apply="infix" element="cts:and-query" tokenize="word">AND</search:joiner>
+		<search:joiner strength="30" apply="infix" element="cts:near-query" tokenize="word">NEAR</search:joiner>
+		<search:joiner strength="30" apply="near2" consume="2" element="cts:near-query">NEAR/</search:joiner>
+		<search:joiner strength="50" apply="constraint">:</search:joiner>
+		<search:joiner strength="50" apply="constraint" compare="LT" tokenize="word">LT</search:joiner>
+		<search:joiner strength="50" apply="constraint" compare="LE" tokenize="word">LE</search:joiner>
+		<search:joiner strength="50" apply="constraint" compare="GT" tokenize="word">GT</search:joiner>
+		<search:joiner strength="50" apply="constraint" compare="GE" tokenize="word">GE</search:joiner>
+		<search:joiner strength="50" apply="constraint" compare="NE" tokenize="word">NE</search:joiner>
+	</search:grammar>
+	<!-- Default sort order. You can also associate states with sort orders to allow switching sort orders -->
+	<search:sort-order direction="descending">
+		<search:score/>
+	</search:sort-order>
+	<!-- Not used, but the default snippeting behavior if no state (see compact/detailed below) was specified -->
+	<search:transform-results apply="snippet">
+		<search:max-matches>1</search:max-matches>
+		<search:max-snippet-chars>150</search:max-snippet-chars>
+		<search:per-match-tokens>20</search:per-match-tokens>
+	</search:transform-results>
+	<search:return-query>1</search:return-query>
+	<!-- This controls the snippet size toggle -->
+	<search:operator name="results">
+		<!--
+			<search:state name="compact"><search:transform-results apply="snippet"><search:preferred-elements><search:element ns="" name="body"/></search:preferred-elements><search:max-matches>1</search:max-matches><search:max-snippet-chars>150</search:max-snippet-chars><search:per-match-tokens>20</search:per-match-tokens></search:transform-results></search:state>
+		-->
+		<search:state name="detailed">
+			<search:transform-results apply="snippet">
+				<search:max-matches>2</search:max-matches>
+				<search:max-snippet-chars>400</search:max-snippet-chars>
+				<search:per-match-tokens>30</search:per-match-tokens>
+			</search:transform-results>
+		</search:state>
+	</search:operator>
+	<search:operator name="sort">
+		<search:state name="score">
+			<search:sort-order>
+				<search:score/>
+			</search:sort-order>
+		</search:state>
+	</search:operator>
+	<!-- Annotations (allowed pretty much anywhere) allow adding text or elements to feed custom components with options that would normally not validate) -->
+	<search:annotation>Delta options here</search:annotation>
+	<!-- Facet based on document collections, simple yet elegant -->
+	<search:constraint name="Source">
+		<search:collection facet="true" prefix="/type/" />
+	</search:constraint>
+	<search:constraint name="Keyword">
+		<search:custom facet="true">
+			<search:parse apply="parse" ns="http://demo.marklogic.com/constraints/investigation" at="/custom/constraint/investigation.xqy"/>
+			<search:start-facet apply="start-facet" ns="http://demo.marklogic.com/constraints/investigation" at="/custom/constraint/investigation.xqy"/>
+			<search:finish-facet apply="finish-facet" ns="http://demo.marklogic.com/constraints/investigation" at="/custom/constraint/investigation.xqy"/>
+			<!-- <search:facet-option>concurrent</search:facet-option> -->
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+		</search:custom>
+	</search:constraint>
+	<!-- Example facet based on the sample-data -->
+	<search:constraint name="EmailFrom">
+		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">
+			<search:facet-option>limit=10</search:facet-option>
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+			<search:path-index>/email/headers/tofrom-metas/email-from/email</search:path-index>
+		</search:range>
+	</search:constraint>
+	<search:constraint name="FirstnameFrom">
+		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">
+			<search:facet-option>limit=10</search:facet-option>
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+			<search:path-index>/email/headers/tofrom-metas/firstname-from/firstname</search:path-index>
+		</search:range>
+	</search:constraint>
+	<search:constraint name="EmailTo">
+		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">
+			<search:facet-option>limit=5</search:facet-option>
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+			<search:path-index>/email/headers/tofrom-metas/email-to/email</search:path-index>
+		</search:range>
+	</search:constraint>
+	<search:constraint name="FirstnameTo">
+		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">
+			<search:facet-option>limit=5</search:facet-option>
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+			<search:path-index>/email/headers/tofrom-metas/firstname-to/firstname</search:path-index>
+		</search:range>
+	</search:constraint>
+	<!--
+	<search:constraint name="Speaker">
+		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">
+			<search:facet-option>limit=10</search:facet-option>
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+			<search:path-index>/envelope/headers/speaker</search:path-index>
+		</search:range>
+	</search:constraint>
+	-->
+	<!--
+		<search:constraint name="EmailDate"><search:range type="xs:dateTime" facet="true"><search:computed-bucket lt="-P1Y" anchor="start-of-year" name="older">Previous Years</search:computed-bucket><search:computed-bucket lt="P1Y" ge="P0Y" anchor="start-of-year" name="year">This Year</search:computed-bucket><search:computed-bucket lt="P1M" ge="P0M" anchor="start-of-month" name="month">This Month</search:computed-bucket><search:computed-bucket lt="P1D" ge="P0D" anchor="start-of-day" name="today">Today</search:computed-bucket><search:facet-option>descending</search:facet-option><search:path-index>/envelope/headers/date-metas/date</search:path-index></search:range></search:constraint>
+	-->
+	<!--
+	<search:constraint name="Year">
+		<search:range type="xs:int" facet="true">
+			<search:path-index>/envelope/headers/date-metas/year</search:path-index>
+		</search:range>
+	</search:constraint>
+	-->
+	<search:constraint name="Date">
+		<search:range type="xs:date" facet="true">
+			<search:path-index>/(email/headers/date-metas/date | trade/TradeDate | transcript/metadata/date)</search:path-index>
+		</search:range>
+	</search:constraint>
+	<search:extract-document-data selected="include">
+		<search:extract-path xmlns:oex="http://example.org/">//(instance)</search:extract-path>
+		<search:extract-path>/email/headers/tofrom-metas/email-from/email</search:extract-path>
+	</search:extract-document-data>
+</search:options>
