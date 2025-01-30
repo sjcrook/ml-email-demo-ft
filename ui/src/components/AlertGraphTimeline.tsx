@@ -7,6 +7,7 @@ import TimelineEmailSearch from "./TimelineEmailSearch";
 import { Card, CardBody, CardHeader, CardTitle, GridLayout, GridLayoutItem } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
 import { xIcon } from '@progress/kendo-svg-icons';
+import parse from 'html-react-parser';
 
 interface Props {
     alertURI: string;
@@ -27,11 +28,21 @@ const AlertGraphTimeline = ({ alertURI }: Props) => {
                 javascript: `
                     'use strict';
 
-                    const docs = Array.from(cts.doc(alertURI).xpath('/alert/(URI | referringDocs)')).map(uri => {
-                        const doc = cts.doc(uri).toObject();
-                        const rootKey = Object.keys(doc)[0];
-                        doc[rootKey].uri = uri;
-                        return doc;
+                    const docs = Array.from(cts.doc("/alert/trades/BT-2000-04-11-012.json").xpath('/alert/(URI | referringDocs)')).map(uri => {
+                         const doc = cts.doc(uri).toObject();
+                          var result = new NodeBuilder();
+                            cts.highlight(doc, cts.wordQuery(cts.doc("/dictionary/supervision.xml").xpath("//xmlns:word/text()", {"xmlns":"http://marklogic.com/xdmp/spell"}).toArray()),
+                            function(builder,text,node,queries,start) {
+                                builder.addText( \`<b>\${text}</b>\`)
+                              }, result
+                            );
+
+                        
+                         let json = xdmp.toJSON( xdmp.unquote(xdmp.quote( result.toNode()))).toObject()
+                       
+                        const rootKey = Object.keys(json)[0];
+                        json[rootKey].uri = uri;
+                        return json;
                     });
 
                     const nodeConfigs = [
@@ -240,7 +251,7 @@ const AlertGraphTimeline = ({ alertURI }: Props) => {
                 <div><span className="rLabel">Date:</span> { e.Date }</div>
                 <div><span className="rLabel">Subject:</span> { e.Subject }</div>
                 <div><span className="rLabel">Text:</span></div>
-                <div className="textIndent1">{ e.body.split("\\\\n").map((t, i) => <p key={ 'e-p-' + i }>{t}</p>) }</div>
+                <div className="textIndent1">{ e.body[0].split("\\\\n").map((t, i) => <p key={ 'e-p-' + i }>{parse(t)}</p>) }</div>
             </div>;
     };
 
@@ -285,7 +296,7 @@ const AlertGraphTimeline = ({ alertURI }: Props) => {
                 <div><span className="rLabel">Datetime:</span> { t.metadata.dateTime }</div>
                 <div><span className="rLabel">Subject:</span> { t.metadata.subject }</div>
                 <div><span className="rLabel">Transcript:</span></div>
-                <div className="textIndent1">{ t.transcriptText.split("\n\n").map((t, i) => <p key={ 't-p-' + i }>{t}</p>) }</div>
+                <div className="textIndent1">{ t.transcriptText[0].split("\n\n").map((t, i) => <p key={ 't-p-' + i }>{parse(t)}</p>) }</div>
             </div>;
     };
 

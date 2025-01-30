@@ -1,0 +1,114 @@
+{
+    "template": {
+        "context": "/transcript",
+        "vars":[
+            {
+                "name": "domain",
+                "val": "\"http://marklogic.com\""
+            }
+        ],
+        "triples": [
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasTranscriptURI')"
+                },
+                "object": {
+                    "val": "xs:string(fn:base-uri(.))"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/ofType')"
+                },
+                "object": {
+                    "val": "xs:string('transcript')"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasCallDateTime')"
+                },
+                "object": {
+                    "val": "xs:dateTime(metadata/dateTime)"
+                }
+            }
+        ],
+        "templates": [
+            {
+                "context": "metadata/*[fn:starts-with(fn:name(), 'caller')]",
+                "vars":[
+                    {
+                        "name": "domain",
+                        "val": "\"http://marklogic.com\""
+                    }
+                ],
+                "triples": [
+                    {
+                        "subject": {
+                            "val": "sem:iri($domain || fn:base-uri(.))"
+                        },
+                        "predicate": {
+                            "val": "sem:iri($domain || '/predicate/hasCaller')"
+                        },
+                        "object": {
+                            "val": "sem:iri($domain || fn:base-uri(.) || '/' || fn:node-name(.))"
+                        }
+                    },
+                    {
+                        "subject": {
+                            "val": "sem:iri($domain || fn:base-uri(.) || '/' || fn:node-name(.))"
+                        },
+                        "predicate": {
+                            "val": "sem:iri($domain || '/predicate/ofType')"
+                        },
+                        "object": {
+                            "val": "xs:string('transcript caller')"
+                        }                          
+                    },
+                    {
+                        "subject": {
+                            "val": "sem:iri($domain || fn:base-uri(.) || '/' || fn:node-name(.))"
+                        },
+                        "predicate": {
+                            "val": "sem:iri($domain || '/predicate/hasCallerName')"
+                        },
+                        "object": {
+                            "val": "xs:string(./name)"
+                        }                          
+                    },
+                    {
+                        "subject": {
+                            "val": "sem:iri($domain || fn:base-uri(.) || '/' || fn:node-name(.))"
+                        },
+                        "predicate": {
+                            "val": "sem:iri($domain || '/predicate/hasCallerFirstName')"
+                        },
+                        "object": {
+                            "val": "xs:string(fn:tokenize(./name, '\\s+')[1])"
+                        }                          
+                    },
+                    {
+                        "subject": {
+                            "val": "sem:iri($domain || fn:base-uri(.) || '/' || fn:node-name(.))"
+                        },
+                        "predicate": {
+                            "val": "sem:iri($domain || '/predicate/hasCallerLastName')"
+                        },
+                        "object": {
+                            "val": "xs:string(fn:tokenize(./name, '\\s+')[2])"
+                        }                          
+                    }
+                ]
+            }  
+        ]
+    }
+}

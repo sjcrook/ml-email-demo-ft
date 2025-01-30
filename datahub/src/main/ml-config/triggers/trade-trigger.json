@@ -1,0 +1,21 @@
+{
+    "name": "trade-trigger",
+    "description": "my trigger",
+    "event": {
+        "data-event": {
+            "collection-scope": {
+                "uri": "/type/trades"
+            },
+            "document-content": {
+                "update-kind": "create"
+            },
+            "when": "post-commit"
+        }
+    },
+    "module": "/ext/my-alert.sjs",
+    "module-db": "%%mlModulesDbName%%",
+    "module-root": "/",
+    "enabled": true,
+    "recursive": true,
+    "task-priority": "normal"
+}

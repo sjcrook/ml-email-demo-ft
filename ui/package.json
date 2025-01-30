@@ -23,6 +23,7 @@
     "@progress/kendo-theme-core": "^8.2.0",
     "@progress/kendo-theme-default": "^8.2.0",
     "axios": "^1.6.8",
+    "html-react-parser": "^5.2.2",
     "ml-fasttrack": "file:ml-fasttrack-1.1.0-ea.tgz",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",

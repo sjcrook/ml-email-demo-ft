@@ -1,14 +1,21 @@
+name: ml-fraud-demo
 services:
-    ml:
-        image: marklogicdb/marklogic-db
-        environment:
-            - MARKLOGIC_INIT=true
-            - MARKLOGIC_ADMIN_USERNAME=mladmin
-            - MARKLOGIC_ADMIN_PASSWORD=mlap4ssw0rd
-        ports:
-            - '38000-38002:8000-8002'
-            - '38010:38010'
-        volumes:
-            - 'email-search-marklogic-volume:/var/opt/MarkLogic/'
-volumes:
-    email-search-marklogic-volume: null
+  ml-fraud-demo:
+    image:  progressofficial/marklogic-db:latest-11
+    domainname: .
+    ports:
+      - 7997-8004:7997-8004
+      - 8006-8020:8006-8020
+    container_name: "ml-fraud-demo.local"
+    environment:
+      - MARKLOGIC_INIT=true
+      - MARKLOGIC_ADMIN_USERNAME=admin
+      - MARKLOGIC_ADMIN_PASSWORD=admin
+      - TZ=Europe/Amsterdam
+    volumes:
+      - ./logs:/var/opt/MarkLogic/Logs
+    networks:
+      - external_net
+
+networks:
+  external_net: {}

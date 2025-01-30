@@ -12,8 +12,6 @@ import TimelineEventDataExample from "./pages/TimelineEventDataExample";
 import GeoMapExampleStaticData from "./pages/GeoMapExampleStaticData";
 import NetworkGraphSearchExample from "./pages/NetworkGraphSearchExample";
 import TimelineExample from "./pages/TimelineExample";
-import TimelineTestPage_ORIG from "./pages/TimelineTestPage_ORIG";
-import TimelineTestPage_TopSongsWorking from "./pages/TimelineTestPage_TopSongsWorking";
 import GeoMapExample from "./pages/GeoMapExample";
 import DataGridPage from "./pages/DataGridPage";
 import AlertsPage from "./pages/AlertsPage";

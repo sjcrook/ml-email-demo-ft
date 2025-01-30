@@ -1,7 +1,0 @@
-plugins {
-    id "com.marklogic.ml-gradle" version "5.0.0"
-}
-
-task addDictionary(type: com.marklogic.gradle.task.ServerEvalTask) {
-    xquery = "xdmp:invoke('/ext/load-dictionary.xqy')"
-}

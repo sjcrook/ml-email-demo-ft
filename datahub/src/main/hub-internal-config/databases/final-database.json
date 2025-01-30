@@ -1,0 +1,167 @@
+{
+  "database-name": "%%mlFinalDbName%%",
+  "schema-database": "%%mlFinalSchemasDbName%%",
+  "triggers-database": "%%mlFinalTriggersDbName%%",
+  "triple-index": true,
+  "collection-lexicon": true,
+  "uri-lexicon": true,
+  "path-namespace": [
+    {
+      "prefix": "es",
+      "namespace-uri": "http://marklogic.com/entity-services"
+    }
+  ],
+  "field": [
+    {
+      "field-name": "datahubSourceType",
+      "field-path": [
+        {
+          "path": "/(es:envelope|envelope)/(es:headers|headers)/sources/datahubSourceType",
+          "weight": 1
+        }
+      ],
+      "stemmed-searches": "off",
+      "word-searches": true,
+      "field-value-searches": true
+    },
+    {
+      "field-name": "datahubSourceName",
+      "field-path": [
+        {
+          "path": "/(es:envelope|envelope)/(es:headers|headers)/sources/datahubSourceName",
+          "weight": 1
+        }
+      ],
+      "stemmed-searches": "off",
+      "word-searches": true,
+      "field-value-searches": true
+    },
+    {
+      "field-name": "datahubCreatedInFlow",
+      "metadata": "",
+      "stemmed-searches": "off",
+      "word-searches": true,
+      "field-value-searches": true
+    },
+    {
+      "field-name": "datahubCreatedByStep",
+      "metadata": "",
+      "stemmed-searches": "off",
+      "word-searches": true,
+      "field-value-searches": true,
+      "tokenizer-override": [
+        {
+          "character": "_",
+          "tokenizer-class": "remove"
+        },
+        {
+          "character": "-",
+          "tokenizer-class": "remove"
+        }
+      ]
+    },
+    {
+      "field-name": "datahubRanBySteps",
+      "metadata": "",
+      "stemmed-searches": "off",
+      "word-searches": true,
+      "field-value-searches": true,
+      "tokenizer-override": [
+        {
+          "character": "-",
+          "tokenizer-class": "remove"
+        }
+      ]
+    },
+    {
+      "field-name": "datahubCreatedByJob",
+      "metadata": "",
+      "stemmed-searches": "off",
+      "word-searches": true,
+      "field-value-searches": true,
+      "tokenizer-override": [
+        {
+          "character": "-",
+          "tokenizer-class": "remove"
+        }
+      ]
+    },
+    {
+      "field-name": "datahubCreatedOn",
+      "metadata": "",
+      "stemmed-searches": "off",
+      "field-value-searches": true
+    },
+    {
+      "field-name": "",
+      "include-root": true
+    }
+  ],
+  "range-field-index": [
+    {
+      "scalar-type": "dateTime",
+      "field-name": "datahubCreatedOn",
+      "collation": "",
+      "range-value-positions": false,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "field-name": "datahubCreatedByJob",
+      "collation": "http://marklogic.com/collation/",
+      "range-value-positions": false,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "field-name": "datahubRanBySteps",
+      "collation": "http://marklogic.com/collation/",
+      "range-value-positions": false,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "field-name": "datahubCreatedByStep",
+      "collation": "http://marklogic.com/collation/",
+      "range-value-positions": false,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "field-name": "datahubCreatedInFlow",
+      "collation": "http://marklogic.com/collation/",
+      "range-value-positions": false,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "field-name": "datahubSourceName",
+      "collation": "http://marklogic.com/collation/",
+      "range-value-positions": true,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "field-name": "datahubSourceType",
+      "collation": "http://marklogic.com/collation/",
+      "range-value-positions": true,
+      "invalid-values": "reject"
+    }
+  ],
+  "range-path-index": [
+    {
+      "scalar-type": "string",
+      "collation": "http://marklogic.com/collation/",
+      "path-expression": "/matchSummary/URIsToProcess",
+      "range-value-positions": true,
+      "invalid-values": "reject"
+    },
+    {
+      "scalar-type": "string",
+      "collation": "http://marklogic.com/collation/",
+      "path-expression": "/matchSummary/actionDetails/*/uris",
+      "range-value-positions": true,
+      "invalid-values": "reject"
+    }
+  ]
+}

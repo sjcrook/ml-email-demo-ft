@@ -1,0 +1,101 @@
+{
+    "template": {
+        "context": "/email",
+        "vars":[
+            {
+                "name": "domain",
+                "val": "\"http://marklogic.com\""
+            }
+        ],
+        "triples": [
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasEmailURI')"
+                },
+                "object": {
+                    "val": "xs:string(fn:base-uri(.))"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasSentDateTime')"
+                },
+                "object": {
+                    "val": "xs:dateTime(headers/date-metas/dateTime)"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/emailFrom')"
+                },
+                "object": {
+                    "val": "xs:string(headers/tofrom-metas/email-from/email)"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || '/entity/person/' || headers/tofrom-metas/email-from/fn:replace(email, '(\\w+)(\\.)(\\w+)(.*)', '$1_$3'))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/associatedWith')"
+                },
+                "object": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || '/entity/person/' || headers/tofrom-metas/email-from/fn:replace(email, '(\\w+)(\\.)(\\w+)(.*)', '$1_$3'))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasName')"
+                },
+                "object": {
+                    "val": "xs:string(headers/tofrom-metas/email-from/fn:replace(email, '(\\w+)(\\.)(\\w+)(.*)', '$1 $3'))"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/emailTo')"
+                },
+                "object": {
+                    "val": "xs:string(headers/tofrom-metas/email-to/email)"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || '/entity/person/' || headers/tofrom-metas/email-to/fn:replace(email, '(\\w+)(\\.)(\\w+)(.*)', '$1_$3'))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/associatedWith')"
+                },
+                "object": {
+                    "val": "sem:iri($domain || fn:base-uri(.))"
+                }
+            },
+            {
+                "subject": {
+                    "val": "sem:iri($domain || '/entity/person/' || headers/tofrom-metas/email-to/fn:replace(email, '(\\w+)(\\.)(\\w+)(.*)', '$1_$3'))"
+                },
+                "predicate": {
+                    "val": "sem:iri($domain || '/predicate/hasName')"
+                },
+                "object": {
+                    "val": "xs:string(headers/tofrom-metas/email-to/fn:replace(email, '(\\w+)(\\.)(\\w+)(.*)', '$1 $3'))"
+                }
+            }
+        ]
+    }
+}

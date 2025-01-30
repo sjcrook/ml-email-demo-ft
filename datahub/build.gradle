@@ -1,0 +1,19 @@
+   plugins {
+      // Gradle Properties plugin
+      id 'net.saliman.properties' version '1.4.6'
+
+      // Data Hub plugin
+        id 'com.marklogic.ml-data-hub' version '6.1.1'
+  }
+
+  repositories {
+  mavenCentral()
+  maven { url "https://developer.marklogic.com/maven2/" }
+}
+
+task addDictionary(type: com.marklogic.gradle.task.ServerEvalTask) {
+
+    client = hubConfig.newFinalClient()
+    xquery = "xdmp:invoke('/ext/load-dictionary.xqy')"
+
+}

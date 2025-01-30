@@ -1,0 +1,6 @@
+{
+  "local-name" : "protectedPathCheck",
+  "document-uri" : "/data-hub/5/system/hubDebug.mjs",
+  "modules-database" : "%%mlModulesDbName%%",
+  "role" : [ "security" ]
+}
