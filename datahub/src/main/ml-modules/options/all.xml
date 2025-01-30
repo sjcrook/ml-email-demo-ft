@@ -77,9 +77,9 @@
 	<!-- Annotations (allowed pretty much anywhere) allow adding text or elements to feed custom components with options that would normally not validate) -->
 	<search:annotation>Delta options here</search:annotation>
 	<!-- Facet based on document collections, simple yet elegant -->
-	<search:constraint name="Source">
-		<search:collection facet="true" prefix="/type/" />
-	</search:constraint>
+    <search:constraint name="Source">
+        <search:collection/>
+    </search:constraint>
 
 	<search:constraint name="Keyword">
 		<search:custom facet="true">
@@ -91,7 +91,7 @@
 			<search:facet-option>descending</search:facet-option>
 		</search:custom>
 	</search:constraint>
-	
+
 	<!-- Example facet based on the sample-data -->
 	<search:constraint name="EmailFrom">
 		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">

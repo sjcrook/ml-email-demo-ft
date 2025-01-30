@@ -6,6 +6,7 @@ import { customResultRender } from './customResultRender';
 import { Dialog } from "@progress/kendo-react-dialogs";
 import { renderDocument } from "../utils/renderUtilities";
 import NetworkGraphSPARQL from "../components/NetworkGraphSPARQL";
+import searchBox from '../config/SearchBox.config.js';
 
 const initialDateRange = { start: new Date(1980, 0, 1), end: new Date(2030, 0, 1) };
 
@@ -13,6 +14,17 @@ const SearchPage = () => {
     const context = useContext(MarkLogicContext);
     const [tabSelected, setTabSelected] = useState(0);
     const [dateVals, setDateVals] = useState(initialDateRange);
+
+
+    const queryParameters = new URLSearchParams(window.location.search)
+    const q = queryParameters.get("q") // query string
+    const c = queryParameters.get("c") // menu collection
+
+    const handleSearch = (params) => {
+        handleWindowClose();
+        context.setQtext(params?.q);
+        context.setCollections(params?.collections);
+      }
 
     const handleFacetClick = (selection) => {
         context.addStringFacetConstraint(selection);
@@ -88,7 +100,7 @@ const SearchPage = () => {
             <GridLayoutItem row={1} col={1} style={{ marginRight: 10 }}>
                 <GridLayout>
                     {
-                        [ "Source", "Keyword", "EmailFrom", "FirstnameFrom", "EmailTo", "FirstnameTo", "Speaker", "Date" ].map((facetName, i) => (
+                        [ "Keyword", "EmailFrom", "FirstnameFrom", "EmailTo", "FirstnameTo", "Speaker", "Date" ].map((facetName, i) => (
                             <GridLayoutItem
                                 row={ i + 1 }
                                 col={1}
@@ -105,12 +117,18 @@ const SearchPage = () => {
                     <GridLayoutItem row={1} col={1} style={{ marginBottom: 10 }}>
                         <SearchBox
                             className={"sb"}
-                            onSearch={(params) => context.setQtext(params.q)}
+                            onSearch={handleSearch}
                             placeholder="Enter search..."
                             searchSuggest={true}
                             searchSuggestMin={3}
                             searchSuggestSubmit={true}
                             searchSuggestLimit={5}
+                            showLoading={true}
+                            menuItems={searchBox.items}
+                            selected={c || 0}
+                            value={q || ''}
+                            boxStyle={{ height: 40 }}
+                            dropdownItemStyle={{ fontSize: 14 }}
                         />
                         <style>{`
                             .sb {
