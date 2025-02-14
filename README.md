@@ -20,7 +20,7 @@ cd datahub
 
 ### Load data into MarkLogic
 
-\# See docker-compose.yml for MarkLogic admin credentials (I'm using 38010 for the port)  
+\# See docker-compose.yml for MarkLogic admin credentials (I'm using 8011 for the port)  
 ```
 ./load_data.sh <ml_admin_usn> <ml_admin_pwd> <port>
 ```

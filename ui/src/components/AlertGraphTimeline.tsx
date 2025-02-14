@@ -4,7 +4,7 @@
 import { MarkLogicContext, NetworkGraph } from "ml-fasttrack";
 import { useContext, useEffect, useState } from "react";
 import TimelineEmailSearch from "./TimelineEmailSearch";
-import { Card, CardBody, CardHeader, CardTitle, GridLayout, GridLayoutItem } from "@progress/kendo-react-layout";
+import { Card, CardBody, CardHeader, GridLayout, GridLayoutItem } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
 import { xIcon } from '@progress/kendo-svg-icons';
 import parse from 'html-react-parser';
@@ -28,17 +28,19 @@ const AlertGraphTimeline = ({ alertURI }: Props) => {
                 javascript: `
                     'use strict';
 
-                    const docs = Array.from(cts.doc("/alert/trades/BT-2000-04-11-012.json").xpath('/alert/(URI | referringDocs)')).map(uri => {
-                         const doc = cts.doc(uri).toObject();
-                          var result = new NodeBuilder();
-                            cts.highlight(doc, cts.wordQuery(cts.doc("/dictionary/supervision.xml").xpath("//xmlns:word/text()", {"xmlns":"http://marklogic.com/xdmp/spell"}).toArray()),
+                    const docs = Array.from(cts.doc(alertURI).xpath('/alert/(URI | referringDocs)')).map(uri => {
+                        const doc = cts.doc(uri).toObject();
+                        var result = new NodeBuilder();
+                        cts.highlight(
+                            doc,
+                            cts.wordQuery(cts.doc("/dictionary/supervision.xml").xpath("//xmlns:word/text()", {"xmlns":"http://marklogic.com/xdmp/spell"}).toArray()),
                             function(builder,text,node,queries,start) {
                                 builder.addText( \`<b>\${text}</b>\`)
-                              }, result
-                            );
+                            },
+                            result
+                        );
 
-                        
-                         let json = xdmp.toJSON( xdmp.unquote(xdmp.quote( result.toNode()))).toObject()
+                        let json = xdmp.toJSON( xdmp.unquote(xdmp.quote( result.toNode()))).toObject();
                        
                         const rootKey = Object.keys(json)[0];
                         json[rootKey].uri = uri;

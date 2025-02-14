@@ -6,9 +6,18 @@
 	<!-- Limit all searches to this additional query -->
 	<search:additional-query>
 		<cts:not-query xmlns:cts="http://marklogic.com/cts">
-			<cts:document-query>
-				<cts:uri>/dictionary/investigation.xml</cts:uri>
-			</cts:document-query>
+			<cts:or-query>
+				<cts:document-query>
+					<cts:uri>/dictionary/investigation.xml</cts:uri>
+				</cts:document-query>
+				<cts:collection-query>
+					<cts:uri>http://marklogic.com/data-hub/flow</cts:uri>
+					<cts:uri>http://marklogic.com/data-hub/step-definition</cts:uri>
+					<cts:uri>http://marklogic.com/xdmp/documents</cts:uri>
+					<cts:uri>http://marklogic.com/xdmp/spell</cts:uri>
+					<cts:uri>hub-core-artifact</cts:uri>
+				</cts:collection-query>
+			</cts:or-query>
 		</cts:not-query>
 	</search:additional-query>
 	<!-- Full-text search options -->
