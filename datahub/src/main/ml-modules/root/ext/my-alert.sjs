@@ -24,11 +24,20 @@ let suspicious_doc =  cts.search(
 
 // if found, insert an alert
 if (fn.exists(suspicious_doc)) {
+    let triggerWords= [];
+
+   words.toArray().forEach(word => { 
+        if(fn.contains(JSON.stringify(fn.head(suspicious_doc)),word)){
+            triggerWords.push(word)
+        }
+    });
+
     let alert = {
         alert: {
             "URI": uri,
             "timestamp": new Date(),
             "message": "This is trade alert, one of the listed words is found in the earlier email or transcript",
+            "triggerWords": triggerWords,
             "referringDocs": suspicious_doc.toArray().map(doc => fn.baseUri(doc))
         }
     };

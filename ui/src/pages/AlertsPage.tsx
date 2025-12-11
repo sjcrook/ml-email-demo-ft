@@ -30,6 +30,7 @@ const AlertsPage = () => {
                 item.alert.referringDocs.forEach(rD => typeCounts[rD.replace(/^\/(.*)\/.*$/, "$1")] += 1);
                 return {
                     uri: item.uri,
+                    words: item.alert.triggerWords,
                     ...typeCounts
                 }
             });   
@@ -57,6 +58,7 @@ const AlertsPage = () => {
                             { title: "URI", field: "uri" },
                             { title: "Transcripts Count", field: "transcripts" },
                             { title: "Emails Count", field: "emails" },
+                            { title: "Key words", field: "words"},
                             {
                                 title: "Action",
                                 cell: (props) => (

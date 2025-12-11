@@ -6,6 +6,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import { codeIcon, cssIcon, fileIcon } from '@progress/kendo-svg-icons';
 
 
+
 export const customResultRender = (dataItem: any, index: number, handleResultClick: Function) => {
 
     const truncatedURI = (uri: string) => {
@@ -20,7 +21,14 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
             return uri;
         }
     };
-
+    
+    const parseUri = (uri: string, details: any) => {
+        const createDate = ""//JSON.stringify(details ).substring(1, 11);
+       // console.log("details", details);
+        const preUri= uri.substring(0, uri.lastIndexOf('/'));
+        return preUri + '/' + createDate;
+    };
+      
     const displayMatchText = (match: Match) => {
         let result = match["match-text"].map(item => {
             if (typeof item === "string") {
@@ -50,9 +58,16 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
         );
     };
 
+    const getInstance = (matches: Match[], index: number ) => {
+       // const res = matches.map((match :Match)=> match["match-text"]);
+       const res = matches[0]["match-text"]; 
+        console.log("DATA="+ res);
+        return  "N/A";
+       
+    };
     //const icon = dataItem.uri.endsWith(".json") ? "css" : dataItem.uri.endsWith(".xml") ? "code" : "file";
     const icon = dataItem.uri.endsWith(".json") ? cssIcon : dataItem.uri.endsWith(".xml") ? codeIcon : fileIcon;
-
+//<span style={{fontWeight: "bold"}}>{ truncatedURI(dataItem.uri) }</span>
     return (
         <Card style={{ padding: 10, marginTop: 10, marginBottom: 10 }} key={"searchresults-" + index}>
             <GridLayout>
@@ -66,7 +81,8 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
                     />                    
                 </GridLayoutItem>
                 <GridLayoutItem row={2} col={1} style={{ marginBottom: 10 }}>
-                    <span style={{fontWeight: "bold"}}>{ truncatedURI(dataItem.uri) }</span>
+                    
+                    <span style={{fontWeight: "bold"}}>{ parseUri(dataItem.uri, getInstance(dataItem.matches,index)) }</span>
                 </GridLayoutItem>
                 <GridLayoutItem row={3} col={1} style={{ paddingLeft: 20 }}>
                     { displayMatches(dataItem.matches, index) }

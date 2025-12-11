@@ -27,3 +27,4 @@ dist-ssr
 
 # Logs
 **/logs
+datahub/.gradle
