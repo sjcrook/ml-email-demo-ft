@@ -24,6 +24,7 @@ const SearchPage = () => {
         handleWindowClose();
         context.setQtext(params?.q);
         context.setCollections(params?.collections);
+        context.postSearch
       }
 
     const handleFacetClick = (selection) => {
@@ -57,6 +58,7 @@ const SearchPage = () => {
     };
 
     useEffect(() => {
+        handleWindowClose() 
         // Execute a search on first load of application
         if (typeof context.searchResponse === 'string' && context.searchResponse.length === 0) {
             context.setPageStart(1);
@@ -91,7 +93,7 @@ const SearchPage = () => {
             }
         }
     }
-   //console.log("full"+ JSON.stringify(context.searchResponse.results))
+   //console.log("full"+ JSON.stringify(context.searchResponse.results[2]))
     return (
         <GridLayout
             cols={[ { width: 350 }, { width: "auto" } ]}
@@ -100,7 +102,7 @@ const SearchPage = () => {
             <GridLayoutItem row={1} col={1} style={{ marginRight: 10 }}>
                 <GridLayout>
                     {
-                        [ "Keyword", "EmailFrom", "FirstnameFrom", "EmailTo", "FirstnameTo", "Speaker", "Date" ].map((facetName, i) => (
+                        [ "Keyword", "EmailFrom", "FirstnameFrom", "EmailTo", "FirstNameTo", "Speaker", "Date" ].map((facetName, i) => (
                             <GridLayoutItem
                                 row={ i + 1 }
                                 col={1}
@@ -146,28 +148,7 @@ const SearchPage = () => {
                     >
                         <div>
                         {
-                            /*context.documentResponse &&
-                                <Dialog
-                                    title={context.documentResponse.uri}
-                                    onClose={handleWindowClose}
-                                    width={"100%"}
-                                    height={"100%"}                
-                                >
-                                    <pre>
-                                        { renderDocument(context.documentResponse, context.searchResponse) }
-                                    </pre>
-                                </Dialog>
-                            */
-                            /*
-                                    title={context.documentResponse.uri}
-                                    visible={true}
-                                    toggleDialog={handleWindowClose}
-                                    initialLeft={windowDimensions.width / 2 - windowCardDimensions.width / 2}
-                                    initialTop={windowDimensions.height / 2 - windowCardDimensions.height /2}
-                                    resizable={true}
-                                    draggable={true}
-                            */
-                            context.documentResponse &&
+                            context.documentResponse && context.searchResponse && 
                                 <WindowCard
                                     title={context.documentResponse.uri}
                                     visible={true}
@@ -211,7 +192,7 @@ const SearchPage = () => {
                         <ResultsCustom
                             results={context.searchResponse.results}
                             className="myResultCustom"
-                            renderItem={( result, index ) => customResultRender(result.dataItem, index, result.dataItem.extracted, handleResultClick)}
+                            renderItem={(result, index ) => customResultRender(result.dataItem, index, handleResultClick)}
                             headerClassName={"headerContainer"}
                             footerClassName={"footerContainer"}
                             paginationClassName={"paginationContainer"}

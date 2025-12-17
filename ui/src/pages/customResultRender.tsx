@@ -7,7 +7,7 @@ import { codeIcon, cssIcon, fileIcon } from '@progress/kendo-svg-icons';
 
 
 
-export const customResultRender = (dataItem: any, index: number, doc: any , handleResultClick: Function) => {
+export const customResultRender = (dataItem: any, index: number, handleResultClick: Function) => {
 
 
     const truncatedURI = (uri: string) => {
@@ -56,17 +56,31 @@ export const customResultRender = (dataItem: any, index: number, doc: any , hand
 
 
      const parseUri = (uri: string, doc : any) => {
-        const createDate = doc?.content[1]?.instance?.Date;
-       // console.log("date="+ JSON.stringify(doc));
+        let createDate = null;
+        console.log("date="+ JSON.stringify(doc));
         const preUri= uri.substring(0, uri.lastIndexOf('/'));
-        return preUri +"/"+ createDate;
+
+     switch(preUri) {
+        case "/emails":
+            createDate = doc?.content[1]?.instance?.Date ;
+            return preUri + "/" + createDate;
+        case "/transcripts":
+            createDate = doc?.content[1]?.transcript?.metadata.date ;
+            return preUri + "/" + createDate;
+        case "/trades":
+            createDate = doc?.content[1]?.trade?.TradeDate ;
+            return preUri + "/" + createDate;
+        default:
+            return "fails";
+        }
     };
     
     //const icon = dataItem.uri.endsWith(".json") ? "css" : dataItem.uri.endsWith(".xml") ? "code" : "file";
     const icon = dataItem.uri.endsWith(".json") ? cssIcon : dataItem.uri.endsWith(".xml") ? codeIcon : fileIcon;
 
 //<span style={{fontWeight: "bold"}}>{ truncatedURI(dataItem.uri) }</span>
-    return (
+    return !dataItem.uri.includes("/alert") && (
+        
         <Card style={{ padding: 10, marginTop: 10, marginBottom: 10 }} key={"searchresults-" + index}>
             <GridLayout>
                 <GridLayoutItem row={1} col={1}>
@@ -79,7 +93,7 @@ export const customResultRender = (dataItem: any, index: number, doc: any , hand
                     />                    
                 </GridLayoutItem>
                 <GridLayoutItem row={2} col={1} style={{ marginBottom: 10 }}>
-                    <span style={{fontWeight: "bold"}}>{ parseUri(dataItem.uri, doc) }</span>
+                    <span style={{fontWeight: "bold"}}>{ parseUri(dataItem.uri, dataItem.extracted) }</span>
                 </GridLayoutItem>
                 <GridLayoutItem row={3} col={1} style={{ paddingLeft: 20 }}>
                     { displayMatches(dataItem.matches, index) }

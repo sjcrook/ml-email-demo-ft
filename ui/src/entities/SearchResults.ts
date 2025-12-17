@@ -5,6 +5,7 @@ interface Highlight {
 export interface Match {
     "path": string;
     "match-text": (string | Highlight)[];
+    "doc": any ;
 }
 
 interface SearchResult {

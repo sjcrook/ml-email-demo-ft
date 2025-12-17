@@ -21,6 +21,7 @@ const NavigationDrawer = props => {
         setExpanded(!expanded);
     };
     const onSelect = e => {
+        console.log(e.itemTarget.props.route)
         navigate(e.itemTarget.props.route);
         setSelected(e.itemIndex);
         if (expanded) {
@@ -94,12 +95,12 @@ const NavigationDrawer = props => {
                     <AppBarSection>
                         {
                             auth && auth.authenticated ?
-                            <Tooltip anchorElement="target2">
+                            <Tooltip anchorElement="target">
                             <span id="group">
-                                <button type="button" class="btn btn-info" onClick={alertsPage}> 
-                                  <i class="fa fa-bell"></i>
+                                <button type="button" className="btn btn-info" onClick={alertsPage}> 
+                                  <i className="fa fa-bell"></i>
                                 </button>
-                                <span class="badge badge-light">0</span>
+                                <span className="badge badge-light">0</span>
                             </span>
                             </Tooltip> :
                             null

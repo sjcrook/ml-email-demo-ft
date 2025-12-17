@@ -127,7 +127,7 @@ export const highlightText = (data: string, uniqueMatches: string[]) => {
 
 export const renderDocument = (documentResponse: any, searchResponse: any) => {
     const uniqueMatches: string[] = [];
- //   console.log("response="+JSON.stringify(searchResponse.results));
+    console.log("response="+JSON.stringify(searchResponse.results));
     
     searchResponse.results.find(item => item.uri === documentResponse.uri).matches.forEach(item => {
         item['match-text'].forEach(item2 => {
@@ -139,6 +139,8 @@ export const renderDocument = (documentResponse: any, searchResponse: any) => {
         });
 
     });
+
+  console.log("response2="+JSON.stringify(searchResponse.results)); 
     const uri = documentResponse.uri;
     const data = documentResponse.data;
     if (uri.endsWith(".json")) {

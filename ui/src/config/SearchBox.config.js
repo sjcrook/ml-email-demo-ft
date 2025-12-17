@@ -1,7 +1,7 @@
 const searchBox = {
   items: [
     {
-      value: ['/type/emails', '/type/trades','/type/transcripts','alerts'],
+      value: ['/type/emails', '/type/trades','/type/transcripts'],
       label: 'All Entities'
     },
     {

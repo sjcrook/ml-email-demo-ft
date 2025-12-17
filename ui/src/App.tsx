@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { MLContext, SearchBox, ResultsSnippet } from "ml-fasttrack"
+//import { useContext } from "react";
+//import { MLContext, SearchBox, ResultsSnippet } from "ml-fasttrack"
 import { GridLayout, GridLayoutItem } from "@progress/kendo-react-layout";
  
 //...
- 
 const App = () => {
     return (
         <div className="grid-layout-container">
