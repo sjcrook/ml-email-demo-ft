@@ -23,11 +23,11 @@ let suspicious_doc =  cts.search(
 );
 
 // if found, insert an alert
+ 
 if (fn.exists(suspicious_doc)) {
-    let triggerWords= [];
-
+  let triggerWords= []; 
    words.toArray().forEach(word => { 
-        if(fn.contains(JSON.stringify(fn.head(suspicious_doc)),word)){
+        if(fn.contains(JSON.stringify(suspicious_doc),word)){
             triggerWords.push(word)
         }
     });

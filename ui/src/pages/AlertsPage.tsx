@@ -58,7 +58,7 @@ const AlertsPage = () => {
                             { title: "URI", field: "uri" },
                             { title: "Transcripts Count", field: "transcripts" },
                             { title: "Emails Count", field: "emails" },
-                            { title: "Key words", field: "words"},
+                            { title: "Trigger words", field: "words"},
                             {
                                 title: "Action",
                                 cell: (props) => (

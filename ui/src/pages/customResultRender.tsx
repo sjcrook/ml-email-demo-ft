@@ -7,7 +7,8 @@ import { codeIcon, cssIcon, fileIcon } from '@progress/kendo-svg-icons';
 
 
 
-export const customResultRender = (dataItem: any, index: number, handleResultClick: Function) => {
+export const customResultRender = (dataItem: any, index: number, doc: any , handleResultClick: Function) => {
+
 
     const truncatedURI = (uri: string) => {
         // URI_LENGTH_START + 3 (...) + URI_LENGTH_END must equal URI_LENGTH_TOTAL
@@ -22,12 +23,7 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
         }
     };
     
-    const parseUri = (uri: string, details: any) => {
-        const createDate = ""//JSON.stringify(details ).substring(1, 11);
-       // console.log("details", details);
-        const preUri= uri.substring(0, uri.lastIndexOf('/'));
-        return preUri + '/' + createDate;
-    };
+   
       
     const displayMatchText = (match: Match) => {
         let result = match["match-text"].map(item => {
@@ -58,15 +54,17 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
         );
     };
 
-    const getInstance = (matches: Match[], index: number ) => {
-       // const res = matches.map((match :Match)=> match["match-text"]);
-       const res = matches[0]["match-text"]; 
-        console.log("DATA="+ res);
-        return  "N/A";
-       
+
+     const parseUri = (uri: string, doc : any) => {
+        const createDate = doc?.content[1]?.instance?.Date;
+        console.log("date="+ JSON.stringify(doc));
+        const preUri= uri.substring(0, uri.lastIndexOf('/'));
+        return preUri +"/"+ createDate;
     };
+    
     //const icon = dataItem.uri.endsWith(".json") ? "css" : dataItem.uri.endsWith(".xml") ? "code" : "file";
     const icon = dataItem.uri.endsWith(".json") ? cssIcon : dataItem.uri.endsWith(".xml") ? codeIcon : fileIcon;
+
 //<span style={{fontWeight: "bold"}}>{ truncatedURI(dataItem.uri) }</span>
     return (
         <Card style={{ padding: 10, marginTop: 10, marginBottom: 10 }} key={"searchresults-" + index}>
@@ -81,8 +79,7 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
                     />                    
                 </GridLayoutItem>
                 <GridLayoutItem row={2} col={1} style={{ marginBottom: 10 }}>
-                    
-                    <span style={{fontWeight: "bold"}}>{ parseUri(dataItem.uri, getInstance(dataItem.matches,index)) }</span>
+                    <span style={{fontWeight: "bold"}}>{ parseUri(dataItem.uri, doc) }</span>
                 </GridLayoutItem>
                 <GridLayoutItem row={3} col={1} style={{ paddingLeft: 20 }}>
                     { displayMatches(dataItem.matches, index) }

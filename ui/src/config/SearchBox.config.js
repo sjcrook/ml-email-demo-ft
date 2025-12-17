@@ -9,6 +9,10 @@ const searchBox = {
       label: 'Emails'
     },
     {
+      value: ['/type/transcripts'],
+      label: 'Transcripts'
+    },
+    {
       value: ['/type/trades'],
       label: 'Trades'
     },

@@ -89,18 +89,23 @@ const SignIn = () => {
 
     return (
         <>
-            <div>
-                <GridLayout
-                    className="signInLayout"
-                    align={{ horizontal: 'center', vertical: 'middle' }}
-                >
-                    <Form
-                        onSubmit={handleSubmit}
-                        validator={formValidator}
-                        render={(formRenderProps: FormRenderProps) => (
-                            <FormElement style={{ maxWidth: 650 }}>
-                                <fieldset className={"k-form-fieldset"}>
-                                    <FieldWrapper>
+           
+            <div className="sign-in-page">
+                <div className="sign-in-wrapper">
+                    <div className="logo-wrapper k-mb-4">
+                        <img width={'100%'} src='progress-data-platform.svg' alt={'Progress Data Platform'} /> 
+                    </div>
+
+                    <div className="inputs-wrapper k-border k-border-light k-border-solid k-p-4 k-rounded-lg">
+                        <h2 className="k-mt-0">
+                            Email Audit
+                        </h2>
+                        <Form
+                            onSubmit={handleSubmit}
+                            validator={formValidator}
+                            render={(formRenderProps: FormRenderProps) => (
+                                <FormElement style={{ maxWidth: 650 }}>
+                                    <fieldset className={"k-form-fieldset"}>
                                         <div className="k-form-field-wrap">
                                             <Field
                                                 name={"username"}
@@ -109,11 +114,9 @@ const SignIn = () => {
                                                 label={"Username"}
                                                 required={true}
                                                 minLength={usernameLengthMin}
-                                                size="25"
+                                                size="26"
                                             />
                                         </div>
-                                    </FieldWrapper>
-                                    <FieldWrapper>
                                         <div className="k-form-field-wrap">
                                             <Field
                                                 name={"password"}
@@ -123,52 +126,38 @@ const SignIn = () => {
                                                 type="password"
                                                 required={true}
                                                 minLength={passwordLengthMin}
-                                                size="25"
+                                                size="26"
                                             />
                                         </div>
-                                    </FieldWrapper>
-                                </fieldset>
-                                <div className="k-form-buttons" id="signInButtonWrapper">    
-                                    <Button
-                                        themeColor="base"
-                                        type={"submit"}
-                                        className="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
-                                        disabled={!formRenderProps.valid}
-                                        fillMode={"outline"}
-                                        rounded={null}
-                                    >
-                                        Sign in
-                                    </Button>
-                                </div>
-                                {
-                                    //signInError && <div className="signInErrorPadding">Error logging in: { signInError }</div>
-                                }
-                                <style>{`
-                                    #signInButtonWrapper {
-                                        padding-top: 0px;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
+                                    </fieldset>
+                                    <div className="k-form-buttons" id="signInButtonWrapper">    
+                                        <Button
+                                            themeColor="base"
+                                            type={"submit"}
+                                            className="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+                                            disabled={!formRenderProps.valid}
+                                            fillMode={"outline"}
+                                            rounded={null}
+                                        >
+                                            Sign in
+                                        </Button>
+                                    </div>
+                                    {
+                                        //signInError && <div className="signInErrorPadding">Error logging in: { signInError }</div>
                                     }
-
-                                    .signInErrorPadding {
-                                        margin-top: 20px;
-                                    }
-
-                                    .error {
-                                        height: 17.15px;
-                                    }
-                                `}</style>
-                            </FormElement>
-                        )}
-                    />
-                </GridLayout>
+                                    
+                                </FormElement>
+                            )}
+                        />
+                    </div>
+                </div>    
             </div>
-            <style>{`
-                .signInLayout {
-                    height: 300px;
-                }
-            `}</style>
+            <div className="second-image-wrapper">
+                <img src="data-value.png" alt="product image" height="50%" />
+            </div>
+            
+           
+           
         </>
     );
 }

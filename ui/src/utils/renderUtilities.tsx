@@ -127,6 +127,8 @@ export const highlightText = (data: string, uniqueMatches: string[]) => {
 
 export const renderDocument = (documentResponse: any, searchResponse: any) => {
     const uniqueMatches: string[] = [];
+ //   console.log("response="+JSON.stringify(searchResponse.results));
+    
     searchResponse.results.find(item => item.uri === documentResponse.uri).matches.forEach(item => {
         item['match-text'].forEach(item2 => {
             if (typeof item2 === 'object') {
@@ -135,6 +137,7 @@ export const renderDocument = (documentResponse: any, searchResponse: any) => {
                 }   
             }
         });
+
     });
     const uri = documentResponse.uri;
     const data = documentResponse.data;
@@ -154,6 +157,7 @@ export const renderDocument = (documentResponse: any, searchResponse: any) => {
 
 export const splitAndMap = (docStr: string) => {
     return  docStr.split(re).map((part, index) => {
+     
         if (part.startsWith(HIGHLIGHT_START)) {
             return <span style={{ backgroundColor: "yellow" }} key={'splitAndMap-' + index}>{ part.substring(15, part.indexOf(HIGHLIGHT_END)) }</span>;
         } else {

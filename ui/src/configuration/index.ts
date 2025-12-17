@@ -23,11 +23,11 @@ const config = {
             svgIcon: searchIcon,
             selected: true,
             route: '/app/search'
-        }, {
+        },/* {
             text: 'Alerts',
             svgIcon: exclamationCircleIcon,
             route: '/app/alerts'
-        }
+        }*/
     ]
 };
 

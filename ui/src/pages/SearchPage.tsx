@@ -91,7 +91,7 @@ const SearchPage = () => {
             }
         }
     }
-
+   //console.log("full"+ JSON.stringify(context.searchResponse.results))
     return (
         <GridLayout
             cols={[ { width: 350 }, { width: "auto" } ]}
@@ -180,7 +180,7 @@ const SearchPage = () => {
                                     height={ windowDimensions.height - 200 }
                                 >
                                     <TabStrip selected={tabSelected} onSelect={handleTabSelect}>
-                                        <TabStripTab title="XML">
+                                        <TabStripTab title="Document">
                                             <pre>
                                                 { renderDocument(context.documentResponse, context.searchResponse) }
                                             </pre>
@@ -211,7 +211,7 @@ const SearchPage = () => {
                         <ResultsCustom
                             results={context.searchResponse.results}
                             className="myResultCustom"
-                            renderItem={({ dataItem, index }) => customResultRender(dataItem, index, handleResultClick)}
+                            renderItem={( result, index ) => customResultRender(result.dataItem, index, result.dataItem.extracted, handleResultClick)}
                             headerClassName={"headerContainer"}
                             footerClassName={"footerContainer"}
                             paginationClassName={"paginationContainer"}

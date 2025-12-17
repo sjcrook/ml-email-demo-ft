@@ -3,7 +3,53 @@ body {
   margin: 0;
   font-family: "Roboto", sans-serif;
 }
-#root {
+/*#root {
   height: 100%;
-  margin: 0;
+  margin: 0 ;
+  padding: 0rem;
+  text-align: center;
+}*/
+
+
+.sign-in-page {
+    position: relative;
+    height: 100%;
+    display: flex;
+    background-color: #A7E9FF;
+    color: #fff;
+}
+
+.sign-in-wrapper {
+    display: flex;
+    color: #070B46;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-width: 560px;
+    width: 30%;
+    z-index: 1;
+    background: #FFFFFF;
+}
+/*
+.sign-in-page .logo-wrapper {
+    text-align: center;
+}*/
+
+
+/*?div.k-form-field:nth-child(3) {
+    display: flex;
+}*/
+
+/*.k-form-field-wrap {
+    position: relative;
+}*/
+.second-image-wrapper {
+    position: absolute;
+    text-align: center;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    width: 61%;
+    height: 60%;
 }

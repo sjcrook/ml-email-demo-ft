@@ -1,0 +1,9 @@
+{
+  "name": "PDP-Design-System",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@progress/kendo-font-icons": "4.0.0",
+    "@progress/kendo-theme-bootstrap": "10.0.0"
+  }
+}

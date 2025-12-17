@@ -63,6 +63,10 @@ const NavigationDrawer = props => {
             });
     };
 
+    const alertsPage = () =>{
+        navigate('/app/alerts')
+    }
+
     return (
         <div>
             <div>
@@ -84,6 +88,21 @@ const NavigationDrawer = props => {
                             //authError !== null ? 'Error' :
                             auth && auth.authenticated ? auth.username :
                             'Guest'
+                        }
+                    </AppBarSection>
+                    <AppBarSpacer style={{ width: 4 }} />
+                    <AppBarSection>
+                        {
+                            auth && auth.authenticated ?
+                            <Tooltip anchorElement="target2">
+                            <span id="group">
+                                <button type="button" class="btn btn-info" onClick={alertsPage}> 
+                                  <i class="fa fa-bell"></i>
+                                </button>
+                                <span class="badge badge-light">0</span>
+                            </span>
+                            </Tooltip> :
+                            null
                         }
                     </AppBarSection>
                     <AppBarSpacer style={{ width: 4 }} />
