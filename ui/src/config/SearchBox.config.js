@@ -15,10 +15,6 @@ const searchBox = {
     {
       value: ['/type/trades'],
       label: 'Trades'
-    },
-    {
-      value: ['alerts'],
-      label: 'Alerts'
     }
   ]
 };

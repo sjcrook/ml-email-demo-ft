@@ -11,6 +11,19 @@ const AlertsPage = () => {
     const [ results, setResults ] = useState(null);
     const [ alertURI, setAlertURI ] = useState(null);
 
+    
+    
+    const trade = async (uri : string) => {
+        return context.getDocument(uri).then( doc => {
+           // console.log("doc:"+JSON.stringify(doc.trade.Broker));
+            return {
+                broker: doc.trade.Broker, 
+                security: doc.trade.Security.Symbol,
+                date: doc.trade.TradeDateTime 
+            }
+        })
+    }
+    
     useEffect(() => {
         context.request({
             url: '/v1/eval',
@@ -25,16 +38,21 @@ const AlertsPage = () => {
                 const json = JSON.parse(item.replace(/^.*X\-URI:\s(.*.json?)\s+({.*)$/s, '{ "uri": "$1", "alert": $2 }'));
                 json.alert = json.alert.alert;
                 return json;
-            }).map(item => {
+            })
+
+            Promise.all(r.map(async item => {
                 const typeCounts = { transcripts: 0, emails: 0 };
+                const docDetails = await trade(item.alert.URI);
                 item.alert.referringDocs.forEach(rD => typeCounts[rD.replace(/^\/(.*)\/.*$/, "$1")] += 1);
+                  //  console.log("doc:"+JSON.stringify(docDetails));
                 return {
                     uri: item.uri,
                     words: item.alert.triggerWords,
+                    subject: docDetails.broker+"/"+ docDetails.security+"/"+docDetails.date, 
                     ...typeCounts
                 }
-            });   
-            setResults(r);
+            })).then(results => setResults(results));   
+           
         })
     }, []);
 
@@ -55,7 +73,7 @@ const AlertsPage = () => {
                     <DataGrid
                         data={results}
                         gridColumns={[
-                            { title: "URI", field: "uri" },
+                            { title: "Subject", field: "subject" },
                             { title: "Transcripts Count", field: "transcripts" },
                             { title: "Emails Count", field: "emails" },
                             { title: "Trigger words", field: "words"},
