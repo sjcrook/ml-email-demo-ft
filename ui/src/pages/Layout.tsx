@@ -18,26 +18,27 @@ const Layout = () => {
                 if (response.status !== 200) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                if (response.data.authenticated) {
+                if (response.data?.authenticated) {
                     setAuth(response.data.username);
                 } else {
                     clearAuth();
                 }
                 return { success: true };
             } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 addNotification({
                     style: 'error',
                     icon: true,
                     closable: true,
-                    message: "Error retrieving authentication status: " + error.message,
+                    message: `Error retrieving authentication status: ${errorMessage}`,
                     timeout: APP_CONFIG.NOTIFICATION_TIMEOUT_LONG
-                });    
-                return { success: false };
+                });   
+                clearAuth(); 
             }
         };
 
         checkAuthStatus();
-    }, []);
+    }, [setAuth, clearAuth, addNotification]);
 
     if (auth === null) {
         return <Notifications/>;

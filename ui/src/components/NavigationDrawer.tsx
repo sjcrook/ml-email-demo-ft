@@ -21,7 +21,7 @@ const NavigationDrawer = props => {
         setExpanded(!expanded);
     };
     const onSelect = e => {
-        console.log(e.itemTarget.props.route)
+        console.log(JSON.stringify(e.itemTarget.props))
         navigate(e.itemTarget.props.route);
         setSelected(e.itemIndex);
         if (expanded) {
@@ -41,7 +41,7 @@ const NavigationDrawer = props => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             clearAuth();
-            //setPending(false);
+            setPending(false);
             return { success: true };
         } catch (error) {
             addNotification({

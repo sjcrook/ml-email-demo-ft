@@ -3,7 +3,7 @@ import Layout from "./pages/Layout";
 import ErrorPage from "./pages/ErrorPage";
 import SearchPage from "./pages/SearchPage";
 import AuthenticatedPages from "./pages/AuthenticatedPages";
-import SignIn from "./pages/SignIn";
+import SignIn from "./pages/SignIn.tsx";
 import AlertsPage from "./pages/AlertsPage";
 
 export const routes = [

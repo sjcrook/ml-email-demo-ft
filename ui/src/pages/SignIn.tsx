@@ -19,83 +19,96 @@ import { APP_CONFIG } from "../local";
 
 const usernameLengthMin = 3;
 const passwordLengthMin = 3;
+const AUTH_ENDPOINT = '/auth/in';
+const SEARCH_ENDPOINT = '/v1/search';
+
+interface Credentials {
+    username: string;
+    password: string;
+}
+
+interface SignInResult {
+    success: boolean;
+}
 
 const SignIn = () => {
     const navigate = useNavigate();
     const { setAuth } = useAuthStore();
     const addNotification = useNotificationStore(s => s.addNotification);
 
-    const formValidator: FormValidatorType = (values: any): KeyValue<string> | undefined =>  {
+    const formValidator: FormValidatorType = (values: any): KeyValue<string> | undefined => {
         let result: KeyValue<string> = {};
         if (values.username && values.username.length < usernameLengthMin) {
-            result["username"] = "Please enter a username of at least " + usernameLengthMin + " characters.";
+            result["username"] = `Please enter a username of at least ${usernameLengthMin} characters.`;
         }
         if (values.password && values.password.length < passwordLengthMin) {
-            result["password"] = "Please enter a password of at least " + passwordLengthMin + " characters.";
+            result["password"] = `Please enter a password of at least ${passwordLengthMin} characters.`;
         }
-        if (Object.keys(result).length > 0) {
-            return result;
-        } else {
-            return;
-        }
+        return Object.keys(result).length > 0 ? result : undefined;
     };
     
     const validatedInput = ({ validationMessage, visited, ...others }: FieldRenderProps) => {
         return (
             <div>
                 <Input {...others} />
-                {
-                    /*visited && validationMessage && <Error>{validationMessage}</Error>*/
-                    <Error className="error">{visited && validationMessage && validationMessage }</Error>
-                }
+                <Error className="error">
+                    {visited && validationMessage ? validationMessage : ''}
+                </Error>
             </div>
         );
     };
 
-    const signIn = async (credentials) => {
+    const signIn = async (credentials: Credentials): Promise<SignInResult> => {
         try {
-            const apiClient = new APIClient('/auth/in');
+            const apiClient = new APIClient(AUTH_ENDPOINT);
             const response = await apiClient.put(credentials);
             if (response.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            const apiClient2 = new APIClient('/v1/search');
-            const response2 = await apiClient2.get();
+            
+            const searchClient = new APIClient(SEARCH_ENDPOINT);
+            const response2 = await searchClient.get();
             if (response2.status !== 200) {
                 throw new Error(`HTTP error! Status: ${response2.status}`);
             }
+            
             setAuth(credentials.username);
             return { success: true };
         } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             addNotification({
                 style: 'error',
                 icon: true,
                 closable: true,
-                message: "Error signing in: " + error.message,
+                message: `Error signing in: ${errorMessage}`,
                 timeout: APP_CONFIG.NOTIFICATION_TIMEOUT_LONG
             });
             return { success: false };
         }
     };
 
-    const handleSubmit = (dataItem: { [name: string]: any }) => {
-        signIn({ username: dataItem.username, password: dataItem.password })
-            .then(result => {
-                if (result.success) {
-                    navigate('/app/search');
-                }
-            });
+    const handleSubmit = async (dataItem: { [name: string]: any }) => {
+        if (!dataItem.username || !dataItem.password) {
+            return;
+        }
+        
+        const result = await signIn({ 
+            username: dataItem.username, 
+            password: dataItem.password 
+        });
+        
+        if (result.success) {
+            navigate('/app/search');
+        }
     };
 
     return (
         <>
-           
             <div className="sign-in-page">
                 <div className="sign-in-wrapper">
                     <div className="logo-wrapper k-mb-4">
                         <img width={'100%'} src='progress-data-platform.svg' alt={'Progress Data Platform'} /> 
                     </div>
-
                     <div className="inputs-wrapper k-border k-border-light k-border-solid k-p-4 k-rounded-lg">
                         <h2 className="k-mt-0">
                             Email Audit

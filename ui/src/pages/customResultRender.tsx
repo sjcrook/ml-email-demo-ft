@@ -57,7 +57,7 @@ export const customResultRender = (dataItem: any, index: number, handleResultCli
 
      const parseUri = (uri: string, doc : any) => {
         let createDate = null;
-        console.log("date="+ JSON.stringify(doc));
+       // console.log("date="+ JSON.stringify(doc));
         const preUri= uri.substring(0, uri.lastIndexOf('/'));
 
      switch(preUri) {
