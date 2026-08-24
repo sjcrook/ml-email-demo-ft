@@ -19,3 +19,323 @@
       url("../node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf")
         format("truetype");
 }
+
+
+
+
+
+/* ===================== */
+/* SearchPage Styles     */
+/* ===================== */
+
+.sb {
+  width: 100%;
+}
+
+.sb span.k-button-text {
+  margin-top: 5px;
+}
+
+.ngs-container {
+  width: calc(100vw - 282px);
+  height: calc(100vh - 350px);
+}
+.ngs-container canvas {
+    position: absolute;
+    top: 4em;
+    bottom: 4em;
+    left: 4em;
+    right: 4em;
+}
+.facet-panel {
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+
+}
+
+.results-panel {
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.grid-layout-item-mb {
+  margin-bottom: 10px;
+}
+
+/* ===================== */
+/* AlertsPage Styles     */
+/* ===================== */
+ .alerts-container {
+  padding: 56px;
+}
+
+ .alert-graph-wrapper {
+  width: 100%;
+  height: 80%;
+}
+
+.gridAlertResults {
+  padding: 30px;
+}
+
+.actionToogle {
+  color: #0d6efd;
+  cursor: pointer;
+}
+
+.alertRowCell {
+  cursor: pointer;
+  vertical-align: top;
+}
+
+.alertRowSubject {
+  font-weight: 500;
+}
+
+.alertRelatedUris {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e2e6ea;
+}
+
+.alertRelatedUrisTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+.alertRelatedUris ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.alertRelatedUris li {
+  font-size: 12px;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.toggleDialog {
+  width: 80vw;
+  max-width: 80vw;
+  height: 80vh;
+  max-height: 80vh;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+}
+
+.toggleDialog .k-window-content {
+  height: calc(80vh - 72px);
+}
+/* ===================== */
+/* Layout Styles         */
+/* ===================== */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.layout-content {
+  flex: 1;
+  overflow: auto;
+}
+
+
+/* ===================== */
+/* NavigationDrawer      */
+/* ===================== */
+.k-drawer-content {
+  padding: 0;
+}
+
+/* ===================== */
+/* NetworkGraphSPARQL    */
+/* ===================== */
+.network-graph-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.network-graph-container .graph-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* ===================== */
+/* TimelineEmailSearch   */
+/* ===================== */
+.timeline-search-container {
+  width: 100%;
+  padding: 8px 0;
+}
+
+
+/* ===================== */
+/* AlertGraphTimeline    */
+/* ===================== */
+.alert-graph-timeline {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===================== */
+/* Notifications         */
+/* ===================== */
+.notification-badge {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-badge .badge-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alerts-bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.alerts-bell-button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.alerts-bell-button:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.alerts-bell-button .fa-bell {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.alerts-count-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  padding: 0 5px;
+  background-color: #d81b3a;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  border: 1px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* ===================== */
+/* SignIn Page            */
+/* ===================== */
+.sign-in-form {
+  width: 350px;
+  padding: 24px;
+}
+
+.sign-in-page {
+    position: relative;
+    height: 100%;
+    display: flex;
+    background-color: #A7E9FF;
+    color: #fff;
+}
+
+.sign-in-wrapper {
+    display: flex;
+    color: #070B46;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-width: 560px;
+    width: 30%;
+    z-index: 1;
+    background: #FFFFFF;
+}
+
+.sign-in-wrapper .inputs-wrapper {
+  width: min(300px, calc(100vw - 48px));
+}
+
+.sign-in-wrapper .inputs-wrapper .error {
+  white-space: nowrap;
+}
+
+.second-image-wrapper {
+    position: absolute;
+    text-align: center;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    width: 61%;
+    height: 60%;
+}
+/* ===================== */
+/* Error Page             */
+/* ===================== */
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.error-page h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+/* ===================== */
+/* Custom Result Render  */
+/* ===================== */
+.custom-result-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.custom-result-item:hover {
+  background-color: #f5f5f5;
+}
+
+ .result-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+ .result-snippet {
+  font-size: 0.875rem;
+  color: #666;
+}

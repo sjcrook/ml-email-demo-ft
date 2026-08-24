@@ -9,5 +9,5 @@ function email_transform(context, params, content) {
         }
     };
 }
-
+//export default email_transform;
 exports.transform = email_transform;

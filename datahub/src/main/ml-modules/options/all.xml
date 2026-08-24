@@ -159,6 +159,14 @@
 			<search:path-index>/(email/headers/date-metas/date | trade/TradeDate | transcript/metadata/date)</search:path-index>
 		</search:range>
 	</search:constraint>
+	<search:constraint name="Broker">
+		<search:range type="xs:string" facet="true" collation="http://marklogic.com/collation/codepoint">
+			<search:facet-option>limit=10</search:facet-option>
+			<search:facet-option>frequency-order</search:facet-option>
+			<search:facet-option>descending</search:facet-option>
+			<search:path-index>/trade/Broker</search:path-index>
+		</search:range>
+	</search:constraint>
 	<search:extract-document-data selected="include">
 		<search:extract-path xmlns:oex="http://example.org/">//(instance)</search:extract-path>
 		<search:extract-path>/email/headers/tofrom-metas/email-from/email</search:extract-path>

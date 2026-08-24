@@ -9,5 +9,5 @@ function transcript_transform(context, params, content) {
         "transcript": c
     };
 }
-
+//export default transcript_transform; 
 exports.transform = transcript_transform;

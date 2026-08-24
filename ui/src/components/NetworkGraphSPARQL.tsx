@@ -234,16 +234,33 @@ const NetworkGraphSPARQL = ({ documentResponse, searchResponse }: Props) => {
             return nodeConfigs.find(nodeConfig => nodeConfig.type === type);
         }
 
+        function createNodeConfig(type, labelText) {
+            const nodeConfig = getNodeConfig(type);
+            if (!nodeConfig) {
+                return null;
+            }
+            return {
+                ...nodeConfig,
+                fontIcon: { ...nodeConfig.fontIcon },
+                border: { ...nodeConfig.border },
+                label: nodeConfig.label.map((label, index) => (
+                    index === 0 ? { ...label, text: labelText } : { ...label }
+                ))
+            };
+        }
+
         if (!graph[sr.s.value] && sr.p.value === 'http://marklogic.com/predicate/ofType') {
-            const newNodeConfig = JSON.parse(JSON.stringify(getNodeConfig(sr.o.value)));
-            newNodeConfig.label[0].text = sr.s.value;
-            graph[sr.s.value] = newNodeConfig;
+            const newNodeConfig = createNodeConfig(sr.o.value, sr.s.value);
+            if (newNodeConfig) {
+                graph[sr.s.value] = newNodeConfig;
+            }
         }
     
         if (sr.o.type !== 'uri' && sr.p.value !== 'http://marklogic.com/predicate/ofType') {
-            const newNodeConfig = JSON.parse(JSON.stringify(getNodeConfig('blank')));
-            newNodeConfig.label[0].text = sr.o.value;
-            graph[sr.o.value] = newNodeConfig;
+            const newNodeConfig = createNodeConfig('blank', sr.o.value);
+            if (newNodeConfig) {
+                graph[sr.o.value] = newNodeConfig;
+            }
         }
     
         // links
@@ -258,8 +275,6 @@ const NetworkGraphSPARQL = ({ documentResponse, searchResponse }: Props) => {
         }
     
     });
-
-    console.log('graph', graph);
 
     return (
         <NetworkGraph

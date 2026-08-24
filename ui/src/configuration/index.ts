@@ -1,7 +1,7 @@
 'use strict';
 
 //import { } from '../local.js';
-import { searchIcon, exclamationCircleIcon } from '@progress/kendo-svg-icons';
+import { searchIcon } from '@progress/kendo-svg-icons';
 
 const config = {
     "APP_NAME": import.meta.env.VITE_APP_APP_NAME,
@@ -23,11 +23,7 @@ const config = {
             svgIcon: searchIcon,
             selected: true,
             route: '/app/search'
-        },/* {
-            text: 'Alerts',
-            svgIcon: exclamationCircleIcon,
-            route: '/app/alerts'
-        }*/
+        }
     ]
 };
 

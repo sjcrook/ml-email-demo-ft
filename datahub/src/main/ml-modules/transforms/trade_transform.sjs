@@ -5,5 +5,5 @@ function trade_transform(context, params, content) {
         "trade": c
     };
 }
-
+//export default trade_transform:
 exports.transform = trade_transform;
