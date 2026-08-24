@@ -1,7 +1,7 @@
 name: ml-fraud-demo
 services:
   ml-fraud-demo:
-    image:  progressofficial/marklogic-db:latest-11
+    image:  progressofficial/marklogic-db:latest
     domainname: .
     ports:
       - 7997-8004:7997-8004
